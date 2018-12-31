@@ -1,8 +1,6 @@
 'use strict';
 
 const assert = require('assert');
-const _ = require('lodash');
-const Promise = require('bluebird');
 
 const Courier = require('../lib/courier');
 
@@ -40,9 +38,9 @@ module.exports = {
   'should throw if handler throws (cb)': function(done) {
     var courier = new Courier();
 
-    courier.reply('test', function(ctx, args) {
-      assert.equal(args, 'hi');
-      return Promise.reject(new Error('custom fail'));
+    courier.reply('test', function(ctx, data) {
+      assert.equal(data, 'hi');
+      throw new Error('custom fail');
     });
 
     courier.request({}, 'test', 'hi', err => {
@@ -54,8 +52,8 @@ module.exports = {
   'should throw if handler throws': function() {
     var courier = new Courier();
 
-    courier.reply('test', function(ctx, args) {
-      assert.equal(args, 'hi');
+    courier.reply('test', function(ctx, data) {
+      assert.equal(data, 'hi');
       throw new Error('custom fail');
     });
 
@@ -67,9 +65,9 @@ module.exports = {
   'should return handler response (cb)': function(done) {
     var courier = new Courier();
 
-    courier.reply('test', function(ctx, args) {
-      assert.equal(args, 'hi there');
-      return args.split('').reverse().join('');
+    courier.reply('test', function(ctx, data) {
+      assert.equal(data, 'hi there');
+      return data.split('').reverse().join('');
     });
 
     courier.request({}, 'test', 'hi there', (err, rep) => {
@@ -82,9 +80,9 @@ module.exports = {
   'should return handler response': function() {
     var courier = new Courier();
 
-    courier.reply('test', function(ctx, args) {
-      assert.equal(args, 'hi there');
-      return args.split('').reverse().join('');
+    courier.reply('test', function(ctx, data) {
+      assert.equal(data, 'hi there');
+      return data.split('').reverse().join('');
     });
 
     courier.request({}, 'test', 'hi there')
