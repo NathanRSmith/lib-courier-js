@@ -64,6 +64,17 @@ courier.request({}, 'reverse', 'hi there', (err, rep) => {
 ```
 
 
+## Pub-Sub
+
+#### TODO
+
+## Push-Pull
+
+#### TODO
+
+
+
+
 ## Context
 
 The Context object is a container for information related to a request/event such as id, logger, ttl, etc. One can be created via `courier.createContext`, but typically will be derived from some parent context via `context.child`. It also contains a `data` property which is a generic kvp container for arbitrary data.
