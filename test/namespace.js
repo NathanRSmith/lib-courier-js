@@ -14,7 +14,7 @@ module.exports = {
       return data.toUpperCase();
     });
 
-    c1.createNamespace('BLAH:', c2);
+    c1.registerNamespace('BLAH:', c2);
 
     return c1.request({}, 'test', 'hi')
       .then(() => { throw new Error('should not reach here'); })
@@ -25,7 +25,7 @@ module.exports = {
 
   'should register namespace with new courier': function() {
     var c1 = new Courier();
-    var c2 = c1.createNamespace('BLAH:');
+    var c2 = c1.registerNamespace('BLAH:');
 
     c2.reply('test', function(ctx, data) {
       assert.equal(data, 'hi');
@@ -41,8 +41,8 @@ module.exports = {
 
   'should throw if namespace already registered': function() {
     var c1 = new Courier();
-    c1.createNamespace('BLAH:');
-    assert.throws(c1.createNamespace.bind(c1, 'BLAH:'), err => {
+    c1.registerNamespace('BLAH:');
+    assert.throws(c1.registerNamespace.bind(c1, 'BLAH:'), err => {
       assert.equal(err.message, 'Namespace already registered for "BLAH:"');
       return true;
     });

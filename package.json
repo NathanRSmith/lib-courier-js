@@ -6,6 +6,10 @@
   "license": "MIT",
   "private": true,
   "main": "lib/courier.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:NathanRSmith/lib-courier-js.git"
+  },
   "scripts": {
     "test": "mocha -u exports --recursive"
   },
