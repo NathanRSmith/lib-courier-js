@@ -1,5 +1,7 @@
 # Lib-Courier-JS
 
+This library can be used to create an event bus or communication mediator to help maintain loose coupling between application components. It is inspired by [backbone.radio](https://github.com/marionettejs/backbone.radio) but adds some additional patterns as well as adhering to the Node.js eventemitter conventions. It can be used for purely intra-service component communication as well as to wrap inter-service interfaces as desired. The main goal is to remove direct calls between components so developers can focus on their APIs rather than where they are organized.
+
 ```
 docker build -t lib-courier-js .
 docker run --rm -it -v `pwd`:/opt/pkg -v /opt/pkg/node_modules lib-courier-js bash
