@@ -1,0 +1,91 @@
+{
+  "id": "lib-courier-js/service-schema.json",
+  "type": "object",
+  "definitions": {
+    "module": {
+      "description": "Configuration for a module. Config will vary by module.",
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean", "default": true},
+        "module": {"type": "string"},
+        "method": {"type": "string"},
+        "namespace": {"type": "string"},
+        "config": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "string"},
+            "name": {"type": "string"}
+          },
+          "required": ["module"],
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+
+  "properties": {
+    "name": {"type": "string"},
+    "description": {"type": "string"},
+
+    "reqrep": {
+      "description": "Section for request-reply sources & handlers",
+      "type": "object",
+      "properties": {
+        "sources": {
+          "description": "Request source modules",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/module"}
+          }
+        },
+        "handlers": {
+          "description": "Request handler modules",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/module"}
+          }
+        },
+        "aliases": {
+          "description": "Map of request name aliases",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"type": "string"}
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "pubsub": {
+      "description": "Section for pub-sub event sources & handlers",
+      "type": "object",
+      "properties": {
+        "sources": {
+          "description": "Event source modules",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/module"}
+          }
+        },
+        "handler": {
+          "description": "Event handler modules",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/module"}
+          }
+        },
+        "aliases": {
+          "description": "Map of request name aliases",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"type": "string"}
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [],
+  "additionalProperties": true
+}

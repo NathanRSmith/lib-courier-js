@@ -1,11 +1,10 @@
 {
   "name": "lib-courier-js",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "lib/courier.js",
   "author": "Nathan Smith <nathanrandal@gmail.com>",
   "license": "MIT",
   "private": true,
-  "main": "lib/courier.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:NathanRSmith/lib-courier-js.git"
@@ -14,6 +13,8 @@
     "test": "mocha -u exports --recursive"
   },
   "dependencies": {
+    "ajv": "^6.6.2",
+    "app-root-path": "^2.1.0",
     "bluebird": "^3.5.3",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
