@@ -16,10 +16,10 @@
             "id": {"type": "string"},
             "name": {"type": "string"}
           },
-          "required": ["module"],
           "additionalProperties": true
         }
       },
+      "required": ["module"],
       "additionalProperties": false
     }
   },
