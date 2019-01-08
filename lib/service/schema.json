@@ -28,64 +28,15 @@
     "name": {"type": "string"},
     "description": {"type": "string"},
 
-    "reqrep": {
-      "description": "Section for request-reply sources & handlers",
+    "modules": {
+      "description": "Modules to be loaded",
       "type": "object",
-      "properties": {
-        "sources": {
-          "description": "Request source modules",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"$ref": "#/definitions/module"}
-          }
-        },
-        "handlers": {
-          "description": "Request handler modules",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"$ref": "#/definitions/module"}
-          }
-        },
-        "aliases": {
-          "description": "Map of request name aliases",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"type": "string"}
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-
-    "pubsub": {
-      "description": "Section for pub-sub event sources & handlers",
-      "type": "object",
-      "properties": {
-        "sources": {
-          "description": "Event source modules",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"$ref": "#/definitions/module"}
-          }
-        },
-        "handler": {
-          "description": "Event handler modules",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"$ref": "#/definitions/module"}
-          }
-        },
-        "aliases": {
-          "description": "Map of request name aliases",
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {"type": "string"}
-          }
-        }
-      },
-      "additionalProperties": false
+      "patternProperties": {
+        "^.*$": {"$ref": "#/definitions/module"}
+      }
     }
   },
-  "required": [],
+
+  "required": ["modules"],
   "additionalProperties": true
 }

@@ -14,32 +14,31 @@ const logger = {
 
 const CONFIG = {
   name: 'sample app',
-  reqrep: {
-    sources: {
-      http: {
-        module: 'http-server-module',
-        config: {
-          port: 8000,
-          routes: [
-            {method: 'GET', route: '/ping', request: 'controller:ping'},
-            {method: 'GET', route: '/time', request: 'controller:time'},
-            {method: 'POST', route: '/sum', request: 'controller:sum'}
-          ]
-        }
+  modules: {
+    http: {
+      module: 'http-server-module',
+      config: {
+        port: 8000,
+        routes: [
+          {method: 'GET', route: '/ping', request: 'controller:ping'},
+          {method: 'GET', route: '/time', request: 'controller:time'},
+          {method: 'POST', route: '/sum', request: 'controller:sum'}
+        ]
       }
     },
-
-    handlers: {
-      controller: {
-        module: 'controller-module',
-        namespace: 'controller:'
-      }
+    controller: {
+      module: 'controller-module',
+      namespace: 'controller:'
     }
   }
 }
 
 function main() {
   const service = new Service();
+
+  process.on('SIGINT', () => service.terminate().then(() => process.exit()).catch(err => process.exit(1)));
+  process.on('uncaughtException', () => service.terminate().then(() => process.exit()).catch(err => process.exit(1)));
+
   return service.initialize({
     config: CONFIG,
     logger,
@@ -52,6 +51,7 @@ function main() {
     if(err.stack) logger.fatal(err.stack);
     else logger.fatal(err);
     process.exit(1);
-  })
+  });
+
 }
 main();
