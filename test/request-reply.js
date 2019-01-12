@@ -89,4 +89,23 @@ module.exports = {
       .then(rep => assert.equal(rep, 'ereht ih'));
   },
 
+  'should pattern handler response': function() {
+    var courier = new Courier();
+
+    courier.replyPattern('test.*', (ctx, name, data) => {
+      assert.equal(name, 'testblah');
+      assert.equal(data, 'req 2');
+      return 'rep 2';
+    });
+    courier.reply('testtest', (ctx, data) => {
+      assert.equal(data, 'req 1');
+      return 'rep 1';
+    });
+
+    courier.request({}, 'testtest', 'req 1')
+      .then(res => assert.equal(res, 'rep 1'))
+      .then(() => courier.request({}, 'testblah', 'req 2'))
+      .then(res => assert.equal(res, 'rep 2'));
+  },
+
 }
