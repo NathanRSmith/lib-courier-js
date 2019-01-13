@@ -7,9 +7,24 @@
       "type": "object",
       "properties": {
         "enabled": {"type": "boolean", "default": true},
-        "module": {"type": "string"},
-        "method": {"type": "string"},
-        "namespace": {"type": "string"},
+        "module": {
+          "description": "Importable path from which to load a module",
+          "type": "string"
+        },
+        "method": {
+          "description": "Method to invoke after importing (default to module export otherwise)",
+          "type": "string"
+        },
+        "namespace": {
+          "description": "A prefix which all handlers in the module share",
+          "type": "string"
+        },
+        "namespaces": {
+          "description": "A set of prefixes which all handlers in the module share",
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        },
         "config": {
           "type": "object",
           "properties": {

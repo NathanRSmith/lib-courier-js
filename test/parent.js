@@ -15,7 +15,7 @@ module.exports = {
       return data.toUpperCase();
     });
 
-    c1.registerParent('', c2);
+    c1.registerParent(c2);
     return c1.request({}, 'test', 'hi')
       .then(() => c1.request({}, 'test', 'hi'))
       .then(res => assert.equal(res, 'HI'));
@@ -26,8 +26,8 @@ module.exports = {
     var c2 = new Courier();
     var c3 = new Courier();
 
-    c1.registerParent('BLAH:', c2);
-    assert.throws(c1.registerParent.bind(c1, 'BLAH:', c3), err => {
+    c1.registerParent(c2);
+    assert.throws(c1.registerParent.bind(c1, c3), err => {
       assert.equal(err.message, 'Parent already registered');
       return true;
     });
