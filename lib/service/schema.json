@@ -2,6 +2,46 @@
   "id": "lib-courier-js/service-schema.json",
   "type": "object",
   "definitions": {
+    "group": {
+      "description": "Configuration for a group of groups or modules.",
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean", "default": true},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "namespace": {
+          "description": "A prefix which all handlers in the module share",
+          "type": "string"
+        },
+        "namespaces": {
+          "description": "A set of prefixes which all handlers in the module share",
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        },
+        "retainPrefix": {
+          "description": "Whether to retain the namespace prefix rather than stripping on delegation",
+          "type": "boolean",
+          "default": false
+        },
+        "groups": {
+          "description": "Group of modules to be loaded",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/group"}
+          }
+        },
+        "modules": {
+          "description": "Modules to be loaded",
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {"$ref": "#/definitions/module"}
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+
     "module": {
       "description": "Configuration for a module. Config will vary by module.",
       "type": "object",
@@ -25,6 +65,11 @@
           "items": {"type": "string"},
           "minItems": 1
         },
+        "retainPrefix": {
+          "description": "Whether to retain the namespace prefix rather than stripping on delegation",
+          "type": "boolean",
+          "default": false
+        },
         "config": {
           "type": "object",
           "properties": {
@@ -43,6 +88,14 @@
     "name": {"type": "string"},
     "description": {"type": "string"},
 
+    "groups": {
+      "description": "Group of modules to be loaded",
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {"$ref": "#/definitions/group"}
+      }
+    },
+
     "modules": {
       "description": "Modules to be loaded",
       "type": "object",
@@ -51,7 +104,5 @@
       }
     }
   },
-
-  "required": ["modules"],
   "additionalProperties": true
 }
