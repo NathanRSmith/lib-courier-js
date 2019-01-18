@@ -6,9 +6,9 @@
       "description": "Configuration for a group of groups or modules.",
       "type": "object",
       "properties": {
-        "enabled": {"type": "boolean", "default": true},
         "name": {"type": "string"},
         "description": {"type": "string"},
+        "enabled": {"type": "boolean", "default": true},
         "namespace": {
           "description": "A prefix which all handlers in the module share",
           "type": "string"
@@ -46,6 +46,8 @@
       "description": "Configuration for a module. Config will vary by module.",
       "type": "object",
       "properties": {
+        "name": {"type": "string"},
+        "description": {"type": "string"},
         "enabled": {"type": "boolean", "default": true},
         "module": {
           "description": "Importable path from which to load a module",
