@@ -4,7 +4,7 @@
   "main": "lib/courier.js",
   "author": "Nathan Smith <nathanrandal@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git@github.com:NathanRSmith/lib-courier-js.git"
