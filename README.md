@@ -71,7 +71,7 @@ One of the goals in creating this project was to encapsulate namespace functiona
 
 For instance, when running locally during development it is much easier to manage a few composed instances vs dozens of instances split solely on functionality. But in testing or production, an entirely different arrangement might be appropriate. Some groups that pose no current performance limitations could be combined while others that require dedicated instances or need to be horizontally scaled could be run separately with no module changes required.
 
-In an attempt to accomplish this goal, `lib-courier-js` provides a minimal framework for composing "modules" and managing their lifecycle. This framework accepts a root courier instance and a configuration of where to find modules, what namespaces to put them in and what configuration to provide to them. When combined with a configuration management solution like [node-config](https://github.com/lorenwest/node-config) it enables a nice balance of development and operational flexibility.
+In an attempt to accomplish this goal, `lib-courier-js` provides a minimal framework for composing "modules" and managing their lifecycle. This framework accepts a root courier instance and a configuration of where to find modules, what namespaces to put them in and what configuration to provide to them. When combined with a configuration management solution like [node-config](https://github.com/lorenwest/node-config), it enables a nice balance of development and operational flexibility.
 
 A very basic service example can be found at `/examples/sample-service` and a few reusable modules are located in `/lib/service/modules`. More examples will be provided in the future, but it has been used privately to compose dozens of interdependent micro-services consisting of multiple modules each. They communicate directly via courier when running in the same instance, or via networked messaging modules when run separately, all with no changes to the modules themselves.
 
@@ -87,37 +87,6 @@ Options:
 * `id`: Courier id or uuid if omitted
 * `name`: Courier name
 * `network`: [Network](#Network) instance or global if omitted
-
-#### `#toJSON() -> Object`
-
-Returns a simplified version of the courier containing:
-
-* `id`
-* `name`
-* `namespaces`: Map of prefix to courier id
-* `reply`: Map of request names to repliers
-    * `calls`: Number of invocations
-    * `lastCalled`: Timestamp of last invocation
-* `replyPattern`: Map of request patterns to repliers
-    * `calls`: Number of invocations
-    * `lastCalled`: Timestamp of last invocation
-* `event`: Map of event names to listeners
-    * `calls`: Number of invocations
-    * `lastCalled`: Timestamp of last invocation
-    * `once`: Whether it was registered as a `once` listener
-* `eventPattern`: Map of event patterns to listeners
-    * `calls`: Number of invocations
-    * `lastCalled`: Timestamp of last invocation
-* `requests`: Map of requested names to stats
-    * `calls`: Number of invocations
-    * `lastCalled`: Timestamp of last invocation
-* `events`: Map of emitted names to stats
-    * `calls`: Number of emissions
-    * `lastCalled`: Timestamp of last emissions
-
-#### `#createContext(...args) -> Context`
-
-Shortcut for creating a new [Context](#Context).
 
 #### `#registerNamespace(prefix[, courier[, opts]]) -> Courier`
 
@@ -171,6 +140,37 @@ Shortcut for `context.on(name, handler, {once: true})`.
 
 Registers a listener for the event pattern. Handler signature is `handler(ctx, name, data)`.
 
+#### `#createContext(...args) -> Context`
+
+Shortcut for creating a new [Context](#Context).
+
+#### `#toJSON() -> Object`
+
+Returns a simplified version of the courier containing:
+
+* `id`
+* `name`
+* `namespaces`: Map of prefix to courier id
+* `reply`: Map of request names to repliers
+    * `calls`: Number of invocations
+    * `lastCalled`: Timestamp of last invocation
+* `replyPattern`: Map of request patterns to repliers
+    * `calls`: Number of invocations
+    * `lastCalled`: Timestamp of last invocation
+* `event`: Map of event names to listeners
+    * `calls`: Number of invocations
+    * `lastCalled`: Timestamp of last invocation
+    * `once`: Whether it was registered as a `once` listener
+* `eventPattern`: Map of event patterns to listeners
+    * `calls`: Number of invocations
+    * `lastCalled`: Timestamp of last invocation
+* `requests`: Map of requested names to stats
+    * `calls`: Number of invocations
+    * `lastCalled`: Timestamp of last invocation
+* `events`: Map of emitted names to stats
+    * `calls`: Number of emissions
+    * `lastCalled`: Timestamp of last emissions
+
 
 ### Context
 
@@ -219,15 +219,15 @@ Shortcut for `ctx.data.unset(...)`;
 A helper class wrapping a simple kvp datastore. Core functionality uses [lodash](https://lodash.com/) `get`, `set`, `has`, `unset`, `keys` utilities.
 
 #### `new DataManager([data])`
-#### `get(path) -> Object`
-#### `has(path) -> Boolean`
-#### `reset() -> this`
-#### `set(path, value) -> this`
-#### `unset(path) -> this`
-#### `inc(path[, n=1]) -> this`
-#### `dec(path[, n=1]) -> this`
-#### `keys() -> [string]`
-#### `toJSON() -> Object`
+#### `#get(path) -> Object`
+#### `#has(path) -> Boolean`
+#### `#reset() -> this`
+#### `#set(path, value) -> this`
+#### `#unset(path) -> this`
+#### `#inc(path[, n=1]) -> this`
+#### `#dec(path[, n=1]) -> this`
+#### `#keys() -> [string]`
+#### `#toJSON() -> Object`
 
 
 ### Service
@@ -272,18 +272,6 @@ Options:
 
 * `id`: Network id or uuid if omitted
 
-#### `#toJSON() -> Object`
-
-Returns a simplified version of the network containing:
-
-* `id`
-* `couriers`: Map of id to `courier.toJSON()`
-* `connections`: List of links (namespaces) between couriers on the network
-    * `from`: Courier id
-    * `to`: Courier id
-    * `prefix`: Namespace prefix
-    * `retainPrefix`
-
 #### `#registerCourier(courier) -> this`
 
 Registers a if it has not already been registered.
@@ -312,6 +300,18 @@ Searches the network for handlers for the given name starting at the courier `id
 * `courier`: Courier to which the handler is registered
 * `handler`: Handler object
 * `name`: Resolved event name when handler was found
+
+#### `#toJSON() -> Object`
+
+Returns a simplified version of the network containing:
+
+* `id`
+* `couriers`: Map of id to `courier.toJSON()`
+* `connections`: List of links (namespaces) between couriers on the network
+    * `from`: Courier id
+    * `to`: Courier id
+    * `prefix`: Namespace prefix
+    * `retainPrefix`
 
 
 ## Development
