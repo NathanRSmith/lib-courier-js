@@ -10,6 +10,22 @@ Three messaging patterns are provided:
 
 Additionally, a barebones framework is provided to organize handlers into "modules" which can be composed into a single running service instance.
 
+#### Contents
+
+* [Couriers, Networks & Namespaces](#couriers-networks--namespaces)
+* [Patterns](#patterns)
+    * [Request/Reply](#requestreply)
+    * [Pub/Sub](#pubsub)
+    * [Push/Pull](#pushpull)
+* [Services, Modules & Composition](#services-modules--composition)
+* [API](#api)
+    * [Courier](#courier)
+    * [Context](#context)
+    * [DataManager](#datamanager)
+    * [Service](#service)
+    * [Network](#network)
+* [Development](#development)
+
 
 ## Couriers, Networks & Namespaces
 
