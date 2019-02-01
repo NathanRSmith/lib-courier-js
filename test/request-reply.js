@@ -110,6 +110,53 @@ module.exports = {
         .then(res => assert.equal(res, 'rep 2'));
     },
 
+    'should prefer name to pattern': function() {
+      var c1 = new Courier();
+      var c2 = new Courier();
+
+      c1.registerNamespace('test:', c2);
+
+      c2.replyPattern('^hi-.*', (ctx, name, data) => {
+        assert.equal(data, '1');
+        return '1';
+      });
+
+      return c1.request({}, 'test:hi-1', '1')
+        .tap(res => assert.equal(res, '1'))
+        .tap(() => {
+          c2.reply('hi-2', (ctx, data) => {
+            assert.equal(data, '2');
+            return '2';
+          });
+        })
+        .then(() => c1.request({}, 'test:hi-2', '2'))
+        .tap(res => assert.equal(res, '2'));
+    },
+
+    'should resolve to new handler on override': function() {
+      var c1 = new Courier();
+      var c2 = new Courier();
+
+      c1.registerNamespace('test:', c2);
+
+      c2.reply('hi', (ctx, data) => {
+        assert.equal(data, '1');
+        return '1';
+      });
+
+      return c1.request({}, 'test:hi', '1')
+        .tap(res => assert.equal(res, '1'))
+        .tap(() => {
+          c2.reply('hi', (ctx, data) => {
+            assert.equal(data, '2');
+            return '2';
+          }, {override: true});
+        })
+        .then(() => c1.request({}, 'test:hi', '2'))
+        .tap(res => assert.equal(res, '2'));
+    },
+
+
   }
 
 }

@@ -45,7 +45,7 @@ In the request/reply pattern, requests are made to a specific name and are deliv
 * List all linking couriers, add to the search queue
 * Get next item from the queue, repeat until handler is found or queue is empty
 
-With each iteration, the search casts a wider net until a replier is found or produces an error. Since it looks at the requester's courier first, names in the local vicinity can use their local name, while inter-courier requests must be prefixed with the desired namespace relative. To avoid cycles, node are only visited once per name per search. In a future version, search results will be cached until the network changes.
+With each iteration, the search casts a wider net until a replier is found or produces an error. Since it looks at the requester's courier first, names in the local vicinity can use their local name, while inter-courier requests must be prefixed with the desired namespace relative. To avoid cycles, node are only visited once per name per search. Search results are cached until the network changes.
 
 Repliers can be registered for a name or a pattern:
 
@@ -66,7 +66,7 @@ In the pub/sub patter, events are emitted with a specific name and are delivered
 * List all linking couriers, prepend the current node's prefix (unless `retainPrefix` is enabled), add to the search queue
 * Get next item from the queue, repeat until the queue is empty
 
-Local listeners can use the event's local name while linked couriers must prepend the expected emitter's namespace. To avoid discovering a subscriber multiple times, once the search traverses into a linked namespace it will not propagate back to the linker. In a future version, search results will be cached until the network changes.
+Local listeners can use the event's local name while linked couriers must prepend the expected emitter's namespace. To avoid discovering a subscriber multiple times, once the search traverses into a linked namespace it will not propagate back to the linker. Search results are cached until the network changes.
 
 Listeners can be registered for a name or a pattern:
 

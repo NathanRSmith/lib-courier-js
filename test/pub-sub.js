@@ -117,6 +117,26 @@ module.exports = {
       parent.emit({}, 'test', 'hi there');
     },
 
+    'should resolve to new listeners': function(done) {
+      var c1 = new Courier();
+      var c2 = new Courier();
+      let ct = 0, target = 3;
+      function doneMaybe() {
+        if(++ct === target) done();
+      }
+
+      c1.registerNamespace('test:', c2);
+
+      c2.on('hi', (ctx, data) => {
+        doneMaybe()
+      });
+      c1.emit({}, 'hi', '1');
+      c2.on('hi', (ctx, data) => {
+        doneMaybe();
+      });
+      c1.emit({}, 'hi', '2');
+    },
+
   }
 
 }
