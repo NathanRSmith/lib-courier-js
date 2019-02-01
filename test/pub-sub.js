@@ -104,6 +104,19 @@ module.exports = {
       child.emit({}, 'test', 'hi there');
     },
 
+    'should propagate to children': function(done) {
+      var child = new Courier();
+      var parent = new Courier();
+
+      child.on('test', function(ctx, data) {
+        assert.equal(data, 'hi there');
+        done();
+      });
+
+      parent.registerNamespace('BLAH:', child);
+      parent.emit({}, 'test', 'hi there');
+    },
+
   }
 
 }
