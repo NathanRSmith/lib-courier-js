@@ -10,6 +10,8 @@ Three messaging patterns are provided:
 
 Additionally, a barebones framework is provided to organize handlers into "modules" which can be composed into a single running service instance.
 
+NPM: https://www.npmjs.com/package/lib-courier-js
+
 #### Contents
 
 * [Couriers, Networks & Namespaces](#couriers-networks--namespaces)
