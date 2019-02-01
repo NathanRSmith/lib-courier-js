@@ -91,6 +91,24 @@ In an attempt to accomplish this goal, `lib-courier-js` provides a minimal frame
 
 A very basic service example can be found at `/examples/sample-service` and a few reusable modules are located in `/lib/service/modules`. More examples will be provided in the future, but it has been used privately to compose dozens of interdependent micro-services consisting of multiple modules each. They communicate directly via courier when running in the same instance, or via networked messaging modules when run separately, all with no changes to the modules themselves.
 
+### Provided Modules
+
+#### CannedReplier
+
+`lib-courier-js/lib/service/modules/canned-replier`
+
+#### DirectoryLoader
+
+`lib-courier-js/lib/service/modules/directory-loader`
+
+#### EventLogger
+
+`lib-courier-js/lib/service/modules/event-logger`
+
+#### ServiceInfo
+
+`lib-courier-js/lib/service/modules/service-info`
+
 
 
 ## API
