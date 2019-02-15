@@ -1,6 +1,6 @@
 {
   "name": "lib-courier-js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "lib/courier.js",
   "author": "Nathan Smith <nathanrandal@gmail.com>",
   "license": "MIT",
