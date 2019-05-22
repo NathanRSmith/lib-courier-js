@@ -1,5 +1,5 @@
 {
-  "id": "lib-courier-js/service-schema.json",
+  "$id": "lib-courier-js/service-schema.json",
   "type": "object",
   "definitions": {
     "group": {
