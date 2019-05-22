@@ -95,21 +95,105 @@ A very basic service example can be found at `/examples/sample-service` and a fe
 
 ### Provided Modules
 
-#### CannedReplier
-
-`lib-courier-js/lib/service/modules/canned-replier`
-
 #### DirectoryLoader
 
 `lib-courier-js/lib/service/modules/directory-loader`
+
+DirectoryLoader is a utility module that facilitates the organization of module code into directories for repliers & listeners. It is not intended to be used on its own, but rather extended or composed into application specific modules. It works by implementing `registerHandlers` to load repliers & listeners relative the module package. As such, it is necessary to specify the package's location, which is done via the `config.root` setting.
+
+Handlers are invoked with an extra argument in the first position which is the a reference to the module itself. This is for convenience and to avoid using `this` and dealing with calling context issues.
+
+Handlers in the repliers/listeners directories can be structured in several patterns:
+
+##### Function Export
+
+The handler name will be the file name without the extension. To make a pattern handler, export `pattern`. A `name` cannot be exported in this case because it would conflict with the function's name, which is a JS thing. Exporting `enabled = false` will cause the handler to be skipped.
+
+```
+module.exports = function(mod, ctx, data) { ... }
+```
+
+```
+module.exports = function(mod, ctx, name, data) { ... }
+module.exports.pattern = '^test-.*$';
+```
+
+##### Handler Export
+
+A `name` can optionally be exported, otherwise the handler name will be the file name without the extension. To make a pattern handler, export `pattern`. Exporting `enabled = false` will cause the handler to be skipped. Handlers are invoked with
+
+```
+module.exports.name = 'test';
+module.exports.handler = function(mod, ctx, data) { ... }
+```
+
+```
+module.exports.pattern = '^test-.*$';
+module.exports.handler = function(mod, ctx, name data) { ... }
+```
+
+##### Handlers Export
+
+Exporting `handlers` allows the packaging of multiple handlers into a single file via KVP. Each value can be a function, in which case the name is the key, or an object where `enabled`, `name`, `pattern` and/or `handler` can be specified (omitting `name`/`pattern` uses the key as name). Exporting `enabled = false` disables all handlers. `handlers` can be further nested if desired.
+
+```
+module.exports.handlers = {
+  test: function(mod, ctx, data) { ... },
+  test_pattern: {
+    pattern: '^test-.*$',
+    handler: function(mod, ctx, data) { ... }
+  }
+}
+```
+
+Config:
+
+* `root`: Path to the directory containing replier & listener directories. Typically this is the module's package directory.
+* `repliers`: Name of the repliers directory. Default `repliers`
+* `listeners`: Name of the listeners directory. Default `listeners`
+
+There are several hooks that can be overridden if desired.
+
+##### `#loadHandler()`
+
+Calls `loadRepliers` & `loadListeners`.
+
+##### `#loadRepliers()`
+
+Loads the code from the `repliers` directory and registers them according to the patterns above.
+
+##### `#loadNamedReplier(name, handler)`
+
+By default uses `this.courier.reply` to register the handler to the name, but this is often useful to wrap for logging, validation, etc purposes.
+
+##### `#loadPatternReplier(name, handler)`
+
+By default uses `this.courier.replyPattern` to register the handler to the pattern, but this is often useful to wrap for logging, validation, etc purposes.
+
+##### `#loadListeners()`
+
+Loads the code from the `listeners` directory and registers them according to the patterns above.
+
+##### `#loadNamedListener(name, handler)`
+
+By default uses `this.courier.on` to register the handler to the name, but this is often useful to wrap for logging, validation, etc purposes.
+
+##### `#loadPatternListener(name, handler)`
+
+By default uses `this.courier.onPattern` to register the handler to the pattern, but this is often useful to wrap for logging, validation, etc purposes.
+
+
+#### ServiceInfo
+
+`lib-courier-js/lib/service/modules/service-info`
 
 #### EventLogger
 
 `lib-courier-js/lib/service/modules/event-logger`
 
-#### ServiceInfo
+#### CannedReplier
 
-`lib-courier-js/lib/service/modules/service-info`
+`lib-courier-js/lib/service/modules/canned-replier`
 
 
 
