@@ -440,4 +440,7 @@ Returns a simplified version of the network containing:
 docker build -t lib-courier-js .
 docker run --rm -it -v `pwd`:/opt/pkg -v /opt/pkg/node_modules lib-courier-js bash
 BLUEBIRD_DEBUG=1 yarn -- run test
+
+npm version x.y.z -m '<release notes>'
+npm publish
 ```
