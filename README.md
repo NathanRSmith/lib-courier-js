@@ -129,7 +129,7 @@ module.exports.handler = function(mod, ctx, data) { ... }
 
 ```
 module.exports.pattern = '^test-.*$';
-module.exports.handler = function(mod, ctx, name data) { ... }
+module.exports.handler = function(mod, ctx, name, data) { ... }
 ```
 
 ##### Handlers Export
@@ -141,7 +141,7 @@ module.exports.handlers = {
   test: function(mod, ctx, data) { ... },
   test_pattern: {
     pattern: '^test-.*$',
-    handler: function(mod, ctx, data) { ... }
+    handler: function(mod, ctx, name, data) { ... }
   }
 }
 ```
