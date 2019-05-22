@@ -76,7 +76,7 @@ courier.once('test-1', (ctx, data) => ...); // only called once
 courier.onPattern('^test.*', (ctx, name, data) => ...);
 ```
 
-Return values are ignored, but errors are not swallowed (may be an option in the future).
+Return values are ignored and errors thrown synchronously are swallowed (may be an option in the future).
 
 ### Push/Pull
 
