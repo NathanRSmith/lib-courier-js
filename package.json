@@ -16,7 +16,7 @@
     "ajv": "^6.6.2",
     "app-root-path": "^2.1.0",
     "bluebird": "^3.5.3",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
