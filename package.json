@@ -13,7 +13,7 @@
     "test": "mocha -u exports --recursive"
   },
   "dependencies": {
-    "ajv": "^6.6.2",
+    "ajv": "^6.12.3",
     "app-root-path": "^2.1.0",
     "bluebird": "^3.5.3",
     "lodash": "^4.17.19",
